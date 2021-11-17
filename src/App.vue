@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <div class="main">
-      <a-form class="form" :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+      <div>
+        <div>每人仅能领取一个激活码</div>
+        <div></div>
+      </div>
+      <a-form class="form" :form="form" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }" @submit="handleSubmit">
         <a-form-item label="QQ">
           <a-input
             size="large"
@@ -32,7 +36,7 @@
             ]"
           />
         </a-form-item>
-        <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+        <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
           <a-button class="button" type="primary" html-type="submit">
             提交
           </a-button>
@@ -61,14 +65,14 @@ export default {
       })
     },
     sendKey(values) {
-      axios.post('/sendKey', {
+      axios.post('api/sendKey', {
         ...values
       })
       .then((response) => {
-        console.log(response)
+        this.$message.success(response)
       })
       .catch((error) => {
-        console.log(error)
+        this.$message.error(error)
       })
     }
   }
@@ -80,12 +84,10 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 .main {
-  width: 800px;
+  width: 50%;
   margin: 0 auto;
 }
 </style>
