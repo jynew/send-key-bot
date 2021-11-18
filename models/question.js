@@ -12,7 +12,8 @@ class Question extends Model {
      */
     static async getAllQuestions() {
         return await Question.findAll({
-            order: sequelize.random(), limit: 10
+            order: sequelize.random(), limit: 10,
+            attributes: ['id', 'topic', 'option']
         })
     }
 
