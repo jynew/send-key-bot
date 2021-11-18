@@ -8,6 +8,7 @@ const path = require('path')
 const cors = require('koa-cors')
 
 const key = require('./routes/key')
+const question = require('./routes/question')
 
 // midwares
 const { loggerMiddleware } = require('./midwares/logger')
@@ -33,6 +34,7 @@ app.use(require('koa-static')(path.resolve(__dirname, config.publicPath)))
 
 // routes
 app.use(key.routes(), key.allowedMethods())
+app.use(question.routes(), question.allowedMethods())
 
 app.use(responseHandler)
 

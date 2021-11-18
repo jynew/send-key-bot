@@ -9,6 +9,23 @@
             <li>最新解释权归金庸群侠传3D重制所有</li>
           </ul>
         </a-form-item>
+        <a-form-item>
+          <a-radio-group v-model="value" @change="onChange">
+          <a-radio :style="radioStyle" :value="1">
+            Option A
+          </a-radio>
+          <a-radio :style="radioStyle" :value="2">
+            Option B
+          </a-radio>
+          <a-radio :style="radioStyle" :value="3">
+            Option C
+          </a-radio>
+          <a-radio :style="radioStyle" :value="4">
+            More...
+            <a-input v-if="value === 4" :style="{ width: 100, marginLeft: 10 }" />
+          </a-radio>
+        </a-radio-group>
+        </a-form-item>
         <a-form-item label="QQ">
           <a-input
             size="large"
@@ -59,24 +76,25 @@ export default {
     }
   },
   methods: {
+    handleQuestion() {
+
+    },
     handleSubmit(e) {
-      e.preventDefault();
+      e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
           this.sendKey(values)
+          axios.post('/api/sendKey', {
+            ...values
+          })
+          .then((response) => {
+            const { data: { code, msg } } = response
+            code === -1 ? this.$message.error(msg) : this.$message.success(msg)   
+          })
+          .catch((error) => {
+            console.log(error)
+          })
         }
-      })
-    },
-    sendKey(values) {
-      axios.post('/api/sendKey', {
-        ...values
-      })
-      .then((response) => {
-        const { data: { code, msg } } = response
-        code === -1 ? this.$message.error(msg) : this.$message.success(msg)   
-      })
-      .catch((error) => {
-        console.log(error)
       })
     }
   }

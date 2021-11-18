@@ -34,7 +34,7 @@ module.exports = {
       if (req.user && req.email) {
           try {
               const { id, key } = await Key.findByEmail(null)
-              const data = await Key.updateById({ id, ...req})
+              await Key.updateById({ id, ...req})
               await mailer(req.email, key)
               ctx.body = { msg: 1006 }
           } catch (err) {
