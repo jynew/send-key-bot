@@ -1,11 +1,14 @@
 <template>
   <div id="app">
     <div class="main">
-      <div>
-        <div>每人仅能领取一个激活码</div>
-        <div></div>
-      </div>
       <a-form class="form" :form="form" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }" @submit="handleSubmit">
+        <a-form-item label="提示">
+          <ul class="tip">
+            <li>正确填写即可领取</li>
+            <li>每人仅能领取一个激活码</li>
+            <li>最新解释权归金庸群侠传3D重制所有</li>
+          </ul>
+        </a-form-item>
         <a-form-item label="QQ">
           <a-input
             size="large"
@@ -65,14 +68,15 @@ export default {
       })
     },
     sendKey(values) {
-      axios.post('api/sendKey', {
+      axios.post('/api/sendKey', {
         ...values
       })
       .then((response) => {
-        this.$message.success(response)
+        const { data: { code, msg } } = response
+        code === -1 ? this.$message.error(msg) : this.$message.success(msg)   
       })
       .catch((error) => {
-        this.$message.error(error)
+        console.log(error)
       })
     }
   }
@@ -87,7 +91,17 @@ export default {
   margin-top: 60px;
 }
 .main {
-  width: 50%;
+  width: 80%;
+  max-width: 800px;
   margin: 0 auto;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul>li {
+  list-style-type: circle;
+  margin-left: 20px;
+  padding-left: 4px;
 }
 </style>
