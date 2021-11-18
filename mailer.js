@@ -11,10 +11,10 @@ const mailer = (to, key) => {
 
   const receiver = {
       from: `"发码机器人"<286882998@qq.com>`,
-      subject: '金庸群侠传3D重制steam激活码',
+      subject: '金庸群侠传3D重制Steam激活码',
       to: to,
       html: 
-      `<p>您的steam激活码为：${key}，请谨慎保管！</p>
+      `<p>您的Steam激活码为：${key}，请谨慎保管！</p>
        <p>激活步骤：Steam左下角“添加游戏”-在Steam上激活产品-输入key激活即可！</p>
       `
   }
