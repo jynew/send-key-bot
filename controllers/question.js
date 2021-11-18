@@ -34,8 +34,8 @@ module.exports = {
           try {
               await Promise.all(
                 req.answers.map(async answer => await Question.isCorrect(answer))
-              ).then(results => {
-                const data = results.every(result => result === true)
+              ).then(results => { 
+                const data = results.length !== 0 && results.every(result => result === true)
                 ctx.body = { msg: data ? 1007 : 1008, data }
               })
           } catch (err) {
