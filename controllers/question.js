@@ -32,14 +32,14 @@ module.exports = {
       const req = ctx.request.body
       if (req.answers) {
           try {
-              Promise.all(
+              await Promise.all(
                 req.answers.map(async answer => await Question.isCorrect(answer))
               ).then(results => {
-                console.log(results)
+                const data = results.every(result => result === true)
+                ctx.body = { msg: data ? 1007 : 1008, data }
               })
-              ctx.body = { msg: 1007 }
           } catch (err) {
-              ctx.body = { code: -1, msg: 1008 }
+              ctx.body = { code: -1, msg: 1000 }
           }
       } else {
           ctx.body = { code: -1, msg: 1002 }

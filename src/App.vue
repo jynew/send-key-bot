@@ -9,22 +9,13 @@
             <li>最新解释权归金庸群侠传3D重制所有</li>
           </ul>
         </a-form-item>
-        <a-form-item>
-          <a-radio-group v-model="value" @change="onChange">
-          <a-radio :style="radioStyle" :value="1">
-            Option A
-          </a-radio>
-          <a-radio :style="radioStyle" :value="2">
-            Option B
-          </a-radio>
-          <a-radio :style="radioStyle" :value="3">
-            Option C
-          </a-radio>
-          <a-radio :style="radioStyle" :value="4">
-            More...
-            <a-input v-if="value === 4" :style="{ width: 100, marginLeft: 10 }" />
-          </a-radio>
-        </a-radio-group>
+        <a-form-item v-for="(question, index) in questions" :key="question.id" :label="`题目${index + 1}`">
+          <div>{{ question.topic }}</div>
+          <a-radio-group v-model="answers[index]">
+            <a-radio v-for="(o, i) in question.option" :key="o" :value="`${question.id}|${i + 1}`">
+              {{ o }}
+            </a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item label="QQ">
           <a-input
@@ -72,27 +63,65 @@ export default {
   name: 'App',
   data() {
     return {
-       form: this.$form.createForm(this)
+        questions: [],
+        answers: [],
+        form: this.$form.createForm(this)
     }
+  },
+  mounted() {
+    this.handleQuestion()
   },
   methods: {
     handleQuestion() {
-
+      axios.get('/api/getAllQuestions')
+      .then((response) => {
+        const { data: { data } } = response
+        this.questions = data.map(item => {
+          const option = item.option.split(';')
+          return {
+            ...item,
+            option
+          }
+        }) 
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
     handleSubmit(e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.sendKey(values)
-          axios.post('/api/sendKey', {
-            ...values
+          const map = {
+            1: 'a',
+            2: 'b',
+            3: 'c',
+            4: 'd'
+          }
+          const answers = this.answers.map(answer => {
+            const temp = answer.split('|')
+            return {
+              id: parseInt(temp[0]),
+              value: map[temp[1]]
+            }
           })
-          .then((response) => {
-            const { data: { code, msg } } = response
-            code === -1 ? this.$message.error(msg) : this.$message.success(msg)   
+          axios.post('/api/isCorrect', {
+            answers
           })
-          .catch((error) => {
-            console.log(error)
+          .then((res) => {
+            const { data: { msg, data } } = res
+            if (data) {
+              this.$message.success(msg)
+              axios.post('/api/sendKey', {
+                ...values
+              })
+              .then((response) => {
+                const { data: { code, msg } } = response
+                code === -1 ? this.$message.error(msg) : this.$message.success(msg)
+              })
+            } else {
+              this.$message.error(msg)
+            }
           })
         }
       })
