@@ -6,9 +6,17 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const path = require('path')
 const cors = require('koa-cors')
+const RateLimit = require('koa2-ratelimit').RateLimit;
 
 const key = require('./routes/key')
 const question = require('./routes/question')
+
+const limiter = RateLimit.middleware({
+  interval: { min: 1 },
+  max: 5
+})
+
+app.use(limiter)
 
 // midwares
 const { loggerMiddleware } = require('./midwares/logger')
