@@ -4,9 +4,9 @@
       <a-form class="form" :form="form" :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }" @submit="handleSubmit">
         <a-form-item label="提示">
           <ul class="tip">
-            <li>金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》（在线玩DOS原版）并支持后续一系列MOD和二次开发。</li>
+            <li>金庸群侠传3D重制版是一个非盈利游戏项目，重制经典游戏《金庸群侠传》并支持后续一系列MOD和二次开发。</li>
             <li>目前正处于内测中，我们使用steam来进行更新游戏（非上架），您可以申请steam激活码。由于激活码有限，我们希望挑选游戏核心受众来帮助我们改进游戏，所以我们每个小时限量发布激活码数量，并且需要正确回答问题，还请见谅。</li>
-            <li>最新解释权归金庸群侠传3D重制所有</li>
+            <li>最新解释权归金庸群侠传3D重制版开源社区所有</li>
           </ul>
         </a-form-item>
         <a-form-item v-for="(question, index) in questions" :key="question.id" :label="`题目${index + 1}`">
@@ -118,13 +118,20 @@ export default {
               .then((response) => {
                 const { data: { code, msg } } = response
                 code === -1 ? this.$message.error(msg) : this.$message.success(msg)
+                this.form = this.$form.createForm(this)
               })
             } else {
               this.$message.error(msg)
             }
+            this.reset()
           })
         }
       })
+    },
+    reset() {
+      this.questions = []
+      this.answers = []
+      this.handleQuestion()
     }
   }
 }
