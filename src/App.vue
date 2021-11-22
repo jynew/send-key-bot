@@ -85,10 +85,6 @@ export default {
           }
         }) 
       })
-      .catch((error) => {
-        console.log(error)
-        this.$message.error('请求过多，请一分钟之后再试')
-      })
     },
     handleSubmit(e) {
       e.preventDefault()
@@ -122,18 +118,13 @@ export default {
                 code === -1 ? this.$message.error(msg) : this.$message.success(msg)
                 this.form = this.$form.createForm(this)
               })
-              .catch((error) => {
-                console.log(error)
-                this.$message.error('请求过多，请一分钟之后再试')
-              })
             } else {
               this.$message.error(msg)
             }
             this.reset()
           })
-          .catch((err) => {
-            console.log(err)
-            this.$message.error('请求过多，请一分钟之后再试')
+          .catch(() => {
+            this.$message.error('答题过多，请一个小时之后再答')
           })
         }
       })
