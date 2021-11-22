@@ -6330,6 +6330,11 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+no-debugger@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/no-debugger/download/no-debugger-0.1.1.tgz#e1da5bae16cbc28d24af433d6d4ef5d7b6dc7165"
+  integrity sha1-4dpbrhbLwo0kr0M9bU7117bccWU=
+
 node-emoji@^1.10.0:
   version "1.11.0"
   resolved "https://registry.nlark.com/node-emoji/download/node-emoji-1.11.0.tgz#69a0150e6946e2f115e9d7ea4df7971e2628301c"

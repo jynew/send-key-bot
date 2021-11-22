@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import 'no-debugger'
 import axios from 'axios'
 export default {
   name: 'App',
