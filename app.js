@@ -1,5 +1,5 @@
 const Koa = require('koa')
-const app = new Koa()
+const app = new Koa({ proxy: true })
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
