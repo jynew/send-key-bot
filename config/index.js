@@ -17,10 +17,10 @@ const config = {
 
   // 数据库配置
   db: {
-      host: 'localhost',    // 数据库地址
-      username: 'root',    // 用户名
-      password: 'root',    // 用户密码
-      database: 'send-key-bot',    // 数据库名 underlined !!!
+      host: '',    // 数据库地址
+      username: '',    // 用户名
+      password: '',    // 用户密码
+      database: '',    // 数据库名 underlined !!!
       port: 3306      // 数据库端口(默认: 3306)
   },
 
