@@ -14,6 +14,16 @@ module.exports = {
         await next();
     },
 
+    async getAllEmptyKeysCount(ctx, next) {
+        try {
+            const data = await Key.findAllByEmail(null)
+            ctx.body = { msg: 1001, data }
+        } catch (err) {
+            ctx.body = { code: -1, msg: 1000, }
+        }
+        await next();
+    },
+
     async createKey(ctx, next) {
         const req = ctx.request.body
         if (!req.key) {

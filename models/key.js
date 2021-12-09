@@ -55,6 +55,19 @@ class Key extends Model {
         })
     }
 
+    /**
+     * @description: 根据email查找所有key
+     * @param {*} id
+     * @return {*} 
+     */    
+    static async findAllByEmail(email){
+        return await this.findAndCountAll({
+            where: {
+                email
+            }
+        })
+    }
+
 }
 // 初始化表结构
 Key.init(

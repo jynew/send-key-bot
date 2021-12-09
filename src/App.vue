@@ -9,6 +9,9 @@
             <li>最终解释权归金庸群侠传3D重制版开源社区所有。</li>
           </ul>
         </a-form-item>
+         <a-form-item label="剩余码数">
+           {{ count }}
+         </a-form-item>
         <a-form-item v-for="(question, index) in questions" :key="question.id" :label="`题目${index + 1}`">
           <div>{{ question.topic }}</div>
           <a-radio-group v-model="answers[index]">
@@ -58,7 +61,7 @@
 </template>
 
 <script>
-import 'no-debugger'
+// import 'no-debugger'
 import axios from 'axios'
 export default {
   name: 'App',
@@ -66,13 +69,22 @@ export default {
     return {
         questions: [],
         answers: [],
-        form: this.$form.createForm(this)
+        form: this.$form.createForm(this),
+        count: 0
     }
   },
   mounted() {
+    this.handleAllEmptyKeysCount()
     this.handleQuestion()
   },
   methods: {
+    handleAllEmptyKeysCount() {
+      axios.get('/api/getAllEmptyKeysCount')
+      .then((response) => {
+        const { data: { data: { count } } } = response
+        this.count = count
+      })
+    },
     handleQuestion() {
       axios.get('/api/getAllQuestions')
       .then((response) => {
