@@ -61,7 +61,7 @@
 </template>
 
 <script>
-// import 'no-debugger'
+import 'no-debugger'
 import axios from 'axios'
 export default {
   name: 'App',
@@ -81,8 +81,8 @@ export default {
     handleAllEmptyKeysCount() {
       axios.get('/api/getAllEmptyKeysCount')
       .then((response) => {
-        const { data: { data: { count } } } = response
-        this.count = count
+        const { data: { data } } = response
+        this.count = data
       })
     },
     handleQuestion() {

@@ -16,8 +16,8 @@ module.exports = {
 
     async getAllEmptyKeysCount(ctx, next) {
         try {
-            const data = await Key.findAllByEmail(null)
-            ctx.body = { msg: 1001, data }
+            const { count } = await Key.findAllByEmail(null)
+            ctx.body = { msg: 1001, data: count }
         } catch (err) {
             ctx.body = { code: -1, msg: 1000, }
         }
